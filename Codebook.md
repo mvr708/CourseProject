@@ -1,22 +1,34 @@
 ### Explanation of variables and transforms
 
-processing steps
-1. Labels from features.txt were added as column names to both X_test.txt and X_train.txt
-2. volunteer_id column obtained from Y_test.txt and Y_train.txt
-3. Activity labels were added and changed from numeric to corresponding labels from activity_labels.txt
-4. A new dataframe was created by selecting only column names that matched mean or std. 
-5. Column names were changed to be more readable.
-6. Columns for activity and volunteer_id were add back to dataframe
-7. From package reshape2, melt was used to make a tall dataframe with 4 columns
+Processing steps:  
+1.  Labels from features.txt were added as column names to both X_test.txt and X_train.txt
+
+2.  volunteer_id column obtained from Y_test.txt and Y_train.txt
+
+3.  Activity labels were added and changed from numeric to corresponding labels from activity_labels.txt
+
+4.  A new dataframe was created by selecting only column names that matched mean or std. 
+
+5.  Column names were changed to be more readable.
+
+6.  Columns for activity and volunteer_id were add back to dataframe
+
+7.  From package reshape2, melt was used to make a tall dataframe with 4 columns
+
 	+ volunteer_id (int)
+
 	+ activity (character string of activity name)
+
 	+ variable (former column names for mean and std sensor data)
+
 	+ value (numeric)
+
 
 8. A new dataframe was then made using ddply from package plyr 
 	to apply mean as summarize funtion for each
 	combination of volunteer_id, activity, and variable
 	in new column averages.
+
 9. This dataframe was written out as averages_by_sensor.txt
 
 The original explanation of variables and how they were obtained is below.
