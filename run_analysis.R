@@ -2,8 +2,8 @@
 
 ## Merges the training and the test sets to create one data set.
 
-require(dplyr)
 require(plyr)
+require(dplyr)
 require(reshape2)
 
 ##set working directory to UCI HAR dataset if it exist in current directory else exit
@@ -15,27 +15,36 @@ if(basename(getwd()) != "UCI HAR Dataset"){
 
 ## read in variable names
 varNames <- read.delim("features.txt",header = F,sep = " ")
+colnames(varNames)<- c("index","variable")
 actNames <- read.delim("activity_labels.txt",header = F,sep = " ")
+colnames(actNames)<- c("index","activity")
 
 ## read in training data set
 ## Appropriately labels the data set with descriptive variable names. 
 trainData <- read.table("train/X_train.txt",header = F,col.names = varNames$variable,fill = F,strip.white = T)
+
 ## read in activity set
 trainActs <- read.delim("train/Y_train.txt",header = F,sep = " ")
+colnames(trainActs)<-"index"
 ## change numbers to names
 ## Uses descriptive activity names to name the activities in the data set
 trainActs$activity <- factor(trainActs$index,levels = actNames$index,labels = actNames$activity)
+
 ## attach activity column
 trainDataN <- mutate(trainData,activity = trainActs$activity)
+
 ## read in volunteer set
-trainDataNV <- mutate(trainDataN,volunteer_id = volNums$V1)
+volNums <- read.delim("train/subject_train.txt",header = F,sep = " ")
 ## attach volunteer column
 trainDataNV <- mutate(trainDataN,volunteer_id = volNums$V1)
 
 ## read in test data set
 testData <- read.table("test/X_test.txt",header = F,col.names = varNames$variable,fill = F,strip.white = T)
+
 ## read in activity set
 testActs <- read.delim("test/Y_test.txt",header = F,sep = " ")
+colnames(testActs)<-"index"
+
 ## change numbers to names
 ## Uses descriptive activity names to name the activities in the data set
 testActs$activity <- factor(testActs$index,levels = actNames$index,labels = actNames$activity)
@@ -55,9 +64,7 @@ dfJoined <- rbind.data.frame(testDataNV,trainDataNV,make.row.names = F)
 dfFiltered <- select(dfJoined,matches("mean|std"))
 dfFiltered<- select(dfFiltered,- starts_with("angle"))
 dfFiltered<- select(dfFiltered,- contains("Freq"))
-
 ## change variable names ;;this is not pretty
-dfFiltered<- select(dfFiltered,- starts_with("angle"))
 names(dfFiltered)<- gsub("^t","Time ",names(dfFiltered))
 names(dfFiltered)<- gsub("^f","FFT ",names(dfFiltered))
 names(dfFiltered)<- gsub("Body","Body ",names(dfFiltered))
@@ -90,10 +97,12 @@ dfFiltered <- mutate(dfFiltered,volunteer_id = dfJoined$volunteer_id)
 ## melt data to make it tidy
 dfTidy <- melt(dfFiltered,id=c("activity","volunteer_id"))
 ## From the data set in step 4, creates a second, independent tidy data set
-## with the average of each variable for each activity and each subjec
+## with the average of each variable for each activity and each subject
 dfTidy <- ddply(dfTidy,c("volunteer_id","activity","variable"),summarize,average = mean(value))
 ## write output table to file tidyDataTable
-
+setwd("..")
+write.table(dfTidy,file="averages_by_sensor.txt",row.names = F)
+message("output written to averages_by_sensor.txt")
 
 
 

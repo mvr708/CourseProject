@@ -2,7 +2,7 @@
 ## The file run_analyis.R transforms the mean and standard deviation from
 ## Samsung accelerometer data into a tidy data set for further processing.
 ## run_analysis.R expects the data to be in the working directory when it is run.
-## run_analysis.R requires dplyr package to be installed
+## run_analysis.R requires dplyr,plyr, and reshape2 packages to be installed
 
 ## data f this project was obtained from the following url:
 ## https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
