@@ -1,17 +1,19 @@
 #### Explanation of run_analysis.R
 
-The script run_analyis.R transforms the mean and standard deviation from
-Samsung accelerometer data into a tidy data set for further processing.
-run_analysis.R expects the data to be in the working directory when it is run.
-run_analysis.R requires dplyr,plyr, and reshape2 packages to be installed
+The script run_analysis.R transforms the mean and standard deviation from
+Samsung accelerometer data into a tidy data set for further processing. 
+Output is a table in the form of a txt file named "averages_by_sensor.txt".  
+
+run_analysis.R expects the data to be in the working directory when it is run.  
+run_analysis.R requires dplyr,plyr, and reshape2 packages to be installed.
 
 data for this project was obtained from the following url:
 https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
 Unzip the archive before running run_analysis.R with the following R commands:
 
-setwd(<path to directory containing run_analysis.R and the folder "UCI HAR dataset">)
-source("run_analysis.R")
+setwd(path to directory containing run_analysis.R and the folder "UCI HAR dataset")  
+source("run_analysis.R")  
 
 #### The original Readme.txt which acompanies the data including attribution and license information
 
