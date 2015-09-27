@@ -26,7 +26,7 @@ Processing steps:
 
 
 8. A new dataframe was then made using ddply from package plyr 
-	to apply mean as summarize funtion for each
+	to apply mean as summarize function for each
 	combination of volunteer_id, activity, and variable
 	in new column averages.
 
